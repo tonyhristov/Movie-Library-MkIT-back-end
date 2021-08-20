@@ -1,16 +1,21 @@
 const express = require('express')
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const logger = require('morgan')
+const config = require('./config/config')
+const dbConnection = require('./config/database')
 
 const app = express()
 
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+dbConnection()
+   .then(() => {
+      require('./config/routes')(app)
 
-require('./config/routes')(app)
+      require('./config/routes')(app)
 
-module.exports = app
+      app.use(function (err, req, res, next) {
+         console.error(err)
+         res.status(500).send(err.message)
+         console.log('*'.repeat(90))
+      })
+
+      app.listen(config.port, console.log(`Listening on port ${config.port}!`))
+   })
+   .catch(console.error)
