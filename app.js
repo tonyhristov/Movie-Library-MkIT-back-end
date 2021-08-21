@@ -6,7 +6,7 @@ const app = express()
 
 dbConnection()
    .then(() => {
-      require('./config/routes')(app)
+      require('./config/express')(app)
 
       require('./config/routes')(app)
 
