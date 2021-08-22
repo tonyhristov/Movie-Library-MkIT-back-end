@@ -9,4 +9,12 @@ module.exports = {
          .then((res) => res.json())
          .then((json) => res.send(json))
    },
+
+   getMovie: (req, res, next) => {
+      const { movieId } = req.body
+
+      fetch(`https://api.tvmaze.com/shows/${movieId}`)
+         .then((res) => res.json())
+         .then((json) => res.send(json))
+   },
 }
