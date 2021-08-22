@@ -5,6 +5,7 @@ module.exports = (app) => {
    app.use('/api/movies', router.movies)
    app.use('/api/favorites', router.favorites)
    app.use('/api/rating', router.rating)
+   app.use('/api/notes', router.notes)
 
    app.use('*', (req, res, next) => {
       res.send('Something went wrong')
