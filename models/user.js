@@ -4,7 +4,7 @@ const saltRound = 10
 
 const Schema = mongoose.Schema
 const Model = mongoose.model
-const { String, ObjectId } = Schema.Types
+const { String, Array } = Schema.Types
 
 const userSchema = new Schema({
    username: {
@@ -16,6 +16,7 @@ const userSchema = new Schema({
       type: String,
       require: true,
    },
+   favorites: { type: Array },
 })
 
 userSchema.methods = {
