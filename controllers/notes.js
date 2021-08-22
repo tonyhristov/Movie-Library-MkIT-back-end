@@ -8,18 +8,18 @@ const getCurrentUser = (req, res, next) => {
 }
 
 module.exports = {
-   getRating: (req, res, next) => {
+   getNote: (req, res, next) => {
       const userId = req.body.userId
       const movieId = req.body.movieId
       const note = req.body.note
 
       models.User.findById(userId)
          .then((user) => {
-            const ratingArr = user.ratings
+            const notesArr = user.notes
 
-            ratingArr.forEach(function (arrayItem) {
-               const rating = Object.keys(arrayItem)
-               if (rating[0] == movieId) {
+            notesArr.forEach(function (arrayItem) {
+               const note = Object.keys(arrayItem)
+               if (note[0] == movieId) {
                   res.send(arrayItem)
                }
             })
@@ -27,14 +27,14 @@ module.exports = {
          .catch((err) => res.status(500).send('Error'))
    },
 
-   addRating: (req, res, next) => {
+   addNote: (req, res, next) => {
       const userId = req.body.userId
       const movieId = req.body.movieId
-      const rating = req.body.rating
+      const note = req.body.note
 
       models.User.findByIdAndUpdate(userId, {
          $addToSet: {
-            ratings: { [movieId]: rating },
+            notes: { [movieId]: note },
          },
       })
          .then((user) => {
@@ -43,13 +43,13 @@ module.exports = {
          .catch((err) => console.log(err))
    },
 
-   removeRating: (req, res, next) => {
+   removeNote: (req, res, next) => {
       const userId = req.body.userId
       const movieId = req.body.movieId
-      const rating = req.body.rating
+      const note = req.body.note
 
       models.User.findByIdAndUpdate(userId, {
-         $pull: { ratings: { [movieId]: rating } },
+         $pull: { notes: { [movieId]: note } },
       })
          .then((user) => {
             getCurrentUser(req, res, next)
