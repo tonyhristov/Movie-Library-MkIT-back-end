@@ -17,6 +17,8 @@ const userSchema = new Schema({
       require: true,
    },
    favorites: { type: Array },
+   ratings: { type: Array },
+   notes: { type: Array },
 })
 
 userSchema.methods = {
