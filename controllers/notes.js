@@ -9,20 +9,20 @@ const getCurrentUser = (req, res, next) => {
 
 module.exports = {
    getNote: (req, res, next) => {
-      const userId = req.body.userId
-      const movieId = req.body.movieId
-      const note = req.body.note
+      const userId = req.headers.userid
+      const movieId = req.headers.movieid
+      let arr = []
 
       models.User.findById(userId)
          .then((user) => {
             const notesArr = user.notes
-
             notesArr.forEach(function (arrayItem) {
                const note = Object.keys(arrayItem)
                if (note[0] == movieId) {
-                  res.send(arrayItem)
+                  arr.push(arrayItem)
                }
             })
+            res.send(arr.pop())
          })
          .catch((err) => res.status(500).send('Error'))
    },
