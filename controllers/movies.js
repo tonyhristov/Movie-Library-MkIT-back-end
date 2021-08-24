@@ -11,9 +11,8 @@ module.exports = {
    },
 
    getMovie: (req, res, next) => {
-      const { movieId } = req.body
-
-      fetch(`https://api.tvmaze.com/shows/${movieId}`)
+      const { movieid } = req.headers
+      fetch(`https://api.tvmaze.com/shows/${movieid}`)
          .then((res) => res.json())
          .then((json) => res.send(json))
    },
