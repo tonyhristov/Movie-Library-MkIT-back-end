@@ -24,7 +24,7 @@ module.exports = {
             })
             res.send(arr.pop())
          })
-         .catch((err) => res.status(500).send('Error'))
+         .catch((err) => console.log(err))
    },
 
    addNote: (req, res, next) => {
